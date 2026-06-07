@@ -21,12 +21,9 @@ export default function PolaroidCard({
       className={`inline-block shadow-polaroid ${animationClass}`}
       style={{ transform: `rotate(${rotation}deg)` }}
     >
-      <div className="bg-polaroid-white p-3 pb-8" style={{ width: 200 }}>
+      <div className="bg-polaroid-white p-3 pb-8 w-[160px] sm:w-[200px]">
         {/* Image area */}
-        <div
-          className="w-full relative overflow-hidden"
-          style={{ height: 180 }}
-        >
+        <div className="w-full relative overflow-hidden h-[144px] sm:h-[180px]">
           {imageSrc ? (
             <Image
               src={imageSrc}

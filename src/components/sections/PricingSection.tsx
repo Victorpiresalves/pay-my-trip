@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import GlowButton from '@/components/ui/GlowButton';
@@ -12,17 +13,60 @@ interface PricingPackage {
   nameKey: 'pkg1_name' | 'pkg2_name' | 'pkg3_name';
   descKey: 'pkg1_desc' | 'pkg2_desc' | 'pkg3_desc';
   popular: boolean;
-  stripeUrl: string;
 }
 
 const packages: PricingPackage[] = [
-  { goals: 1, price: 10, image: '/1-goal.png', nameKey: 'pkg1_name', descKey: 'pkg1_desc', popular: false, stripeUrl: 'https://donate.stripe.com/28E3cw756bjrdPPfxM6Zy00' },
-  { goals: 2, price: 15, image: '/2-goal.png', nameKey: 'pkg2_name', descKey: 'pkg2_desc', popular: true,  stripeUrl: 'https://donate.stripe.com/eVq7sM0GIgDL4ffbhw6Zy01' },
-  { goals: 3, price: 20, image: '/3-goal.png', nameKey: 'pkg3_name', descKey: 'pkg3_desc', popular: false, stripeUrl: 'https://donate.stripe.com/cNi5kE3SUafncLL71g6Zy02' },
+  { goals: 1, price: 10, image: '/1-goal.png', nameKey: 'pkg1_name', descKey: 'pkg1_desc', popular: false },
+  { goals: 2, price: 15, image: '/2-goal.png', nameKey: 'pkg2_name', descKey: 'pkg2_desc', popular: true },
+  { goals: 3, price: 20, image: '/3-goal.png', nameKey: 'pkg3_name', descKey: 'pkg3_desc', popular: false },
+];
+
+const COUNTRIES = [
+  { code: 'BR', flag: '🇧🇷', name: 'Brazil' },
+  { code: 'AR', flag: '🇦🇷', name: 'Argentina' },
+  { code: 'FR', flag: '🇫🇷', name: 'France' },
+  { code: 'DE', flag: '🇩🇪', name: 'Germany' },
+  { code: 'PT', flag: '🇵🇹', name: 'Portugal' },
+  { code: 'ES', flag: '🇪🇸', name: 'Spain' },
+  { code: 'CA', flag: '🇨🇦', name: 'Canada' },
+  { code: 'IT', flag: '🇮🇹', name: 'Italy' },
+  { code: 'MX', flag: '🇲🇽', name: 'Mexico' },
+  { code: 'US', flag: '🇺🇸', name: 'United States' },
 ];
 
 export default function PricingSection() {
   const t = useTranslations('pricing');
+  const [selectedCountry, setSelectedCountry] = useState('BR');
+  const [loadingGoals, setLoadingGoals] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  async function handleBuy(goals: number) {
+    setLoadingGoals(goals);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ country: selectedCountry, goals }),
+      });
+      const { url } = await res.json();
+      if (url) window.location.href = url;
+    } finally {
+      setLoadingGoals(null);
+    }
+  }
+
+  const selected = COUNTRIES.find((c) => c.code === selectedCountry)!;
 
   return (
     <section
@@ -35,7 +79,7 @@ export default function PricingSection() {
     >
       <div className="max-w-5xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-16 bg-pitch-light/40" />
             <p className="font-display text-sm tracking-[0.3em] text-pitch-light uppercase">
@@ -44,6 +88,55 @@ export default function PricingSection() {
             <div className="h-px flex-1 max-w-16 bg-pitch-light/40" />
           </div>
           <h2 className="font-display text-5xl sm:text-6xl text-white">{t('title')}</h2>
+        </div>
+
+        {/* Country selector */}
+        <div className="flex flex-col items-center gap-3 mb-12">
+          <p className="font-display text-sm tracking-[0.2em] text-slate-300 uppercase">
+            {t('select_country')}
+          </p>
+          <div className="relative w-56" ref={dropdownRef}>
+            {/* Trigger */}
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="w-full flex items-center gap-2.5 bg-white/8 border border-white/15 hover:border-pitch-light/60 text-white font-body px-3 py-2.5 rounded-xl focus:outline-none focus:border-pitch-light transition-colors cursor-pointer"
+            >
+              <img
+                src={`https://flagcdn.com/w40/${selected.code.toLowerCase()}.png`}
+                alt={selected.name}
+                width={24}
+                height={16}
+                className="rounded-sm object-cover shrink-0"
+              />
+              <span className="flex-1 text-left text-sm">{selected.name}</span>
+              <span className={`text-slate-400 text-xs transition-transform ${open ? 'rotate-180' : ''}`}>▾</span>
+            </button>
+
+            {/* Dropdown list */}
+            {open && (
+              <ul className="absolute z-30 mt-1 w-full bg-navy-800 border border-white/15 rounded-xl overflow-hidden shadow-2xl">
+                {COUNTRIES.map((c) => (
+                  <li key={c.code}>
+                    <button
+                      onClick={() => { setSelectedCountry(c.code); setOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm font-body hover:bg-white/10 transition-colors cursor-pointer ${
+                        c.code === selectedCountry ? 'bg-pitch-light/15 text-pitch-light' : 'text-white'
+                      }`}
+                    >
+                      <img
+                        src={`https://flagcdn.com/w40/${c.code.toLowerCase()}.png`}
+                        alt={c.name}
+                        width={22}
+                        height={14}
+                        className="rounded-sm object-cover shrink-0"
+                      />
+                      {c.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
 
         {/* Cards */}
@@ -109,20 +202,15 @@ export default function PricingSection() {
 
               {/* CTA */}
               <GlowButton
-                href={pkg.stripeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => handleBuy(pkg.goals)}
                 variant={pkg.popular ? 'primary' : 'ghost'}
                 className="w-full text-center justify-center"
               >
-                {t('buy')}
+                {loadingGoals === pkg.goals ? '...' : t('buy')}
               </GlowButton>
             </motion.div>
           ))}
         </div>
-
-        {/* Footer note */}
-
       </div>
     </section>
   );

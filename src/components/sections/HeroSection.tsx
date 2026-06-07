@@ -32,7 +32,7 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Text */}
         <div className="flex flex-col items-start gap-6">
           <span className="text-pitch-light font-display tracking-[0.3em] text-sm uppercase">
@@ -40,7 +40,7 @@ export default function HeroSection() {
           </span>
 
           <h1
-            className="font-display text-6xl sm:text-7xl xl:text-8xl leading-none text-white"
+            className="font-display text-5xl sm:text-7xl xl:text-8xl leading-none text-white"
             style={{ textShadow: '0 2px 16px rgba(0,0,0,0.9)' }}
           >
             {t('headline')}
@@ -53,16 +53,27 @@ export default function HeroSection() {
             {t('subheadline')}
           </p>
 
-          <div className="flex flex-wrap gap-4 mt-2">
-            <GlowButton href="#buy">{t('cta')}</GlowButton>
-            <GlowButton href="#ranking" variant="ghost">
+          <div className="flex flex-col sm:flex-row gap-3 mt-2 w-full sm:w-auto">
+            <GlowButton href="#buy" wrapperClassName="w-full sm:w-auto" className="w-full text-center">{t('cta')}</GlowButton>
+            <GlowButton href="#ranking" variant="ghost" wrapperClassName="w-full sm:w-auto" className="w-full text-center">
               {t('scroll')}
             </GlowButton>
           </div>
         </div>
 
-        {/* Polaroid stack */}
-        <div className="relative flex justify-center items-center h-80 lg:h-96">
+        {/* Polaroid — mobile: 1 centered */}
+        <div className="lg:hidden flex justify-center items-center h-[240px]">
+          <PolaroidCard
+            caption="⚽ World Cup 2026"
+            rotation={2}
+            animationClass="animate-float-delayed"
+            imageSrc={COPA_IMAGE}
+            imageAlt="Copa do Mundo 2026"
+          />
+        </div>
+
+        {/* Polaroid — desktop: 3-stack */}
+        <div className="hidden lg:block relative h-96">
           <div className="absolute" style={{ top: '10%', left: '5%' }}>
             <PolaroidCard
               caption="🇨🇦 Victoria"

@@ -7,7 +7,6 @@ export interface CountryEntry {
   countryCode: string;
   flag: string;
   countryName: Record<Locale, string>;
-  polaroids: number;
   goals: number;
   highlight?: boolean;
 }

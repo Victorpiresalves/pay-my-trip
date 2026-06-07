@@ -10,7 +10,7 @@ import Image from 'next/image';
 function Footer() {
   const t = useTranslations('footer');
   return (
-    <footer className="py-8 bg-canada-red border-t border-canada-red-dark text-center">
+    <footer className="py-8 bg-navy-900 border-t border-white/10 text-center">
       <div className="flex justify-center mb-3">
         <Image src="/canada-flag.svg" alt="Canada Flag" width={48} height={24} className="rounded-sm shadow-sm opacity-90" />
       </div>

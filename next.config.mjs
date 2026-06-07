@@ -4,22 +4,12 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
     unoptimized: true,
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'maquinadoesporte.com.br',
-      },
-      {
-        protocol: 'https',
-        hostname: 'flagcdn.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.ncl.com',
-      },
+      { protocol: 'https', hostname: 'maquinadoesporte.com.br' },
+      { protocol: 'https', hostname: 'flagcdn.com' },
+      { protocol: 'https', hostname: 'www.ncl.com' },
     ],
   },
 };

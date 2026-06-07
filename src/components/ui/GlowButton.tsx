@@ -10,6 +10,7 @@ interface GlowButtonProps {
   onClick?: () => void;
   variant?: 'primary' | 'ghost';
   className?: string;
+  wrapperClassName?: string;
 }
 
 export default function GlowButton({
@@ -20,13 +21,14 @@ export default function GlowButton({
   onClick,
   variant = 'primary',
   className = '',
+  wrapperClassName = '',
 }: GlowButtonProps) {
   const base =
     'inline-block font-display tracking-widest text-lg px-10 py-4 transition-all duration-300 cursor-pointer select-none';
   const primary =
     'bg-pitch-light text-navy-900 hover:bg-pitch hover:shadow-glow';
   const ghost =
-    'border-2 border-pitch-light text-pitch-light hover:bg-pitch-light hover:text-navy-900 hover:shadow-glow-sm';
+    'border-2 border-pitch-light text-pitch-light bg-black/30 backdrop-blur-sm hover:bg-pitch-light hover:text-navy-900 hover:shadow-glow-sm';
 
   const classes = `${base} ${variant === 'primary' ? primary : ghost} ${className}`;
 
@@ -44,7 +46,7 @@ export default function GlowButton({
     <motion.div
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.97 }}
-      className="inline-block"
+      className={`inline-block ${wrapperClassName}`}
     >
       {el}
     </motion.div>
