@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #0a0e1a;
+    color: #f1f5f9;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: rgba(34, 197, 94, 0.3);
+  }
+}
+
+@layer utilities {
+  .text-stroke-green {
+    -webkit-text-stroke: 2px #22c55e;
+    color: transparent;
+  }
+}

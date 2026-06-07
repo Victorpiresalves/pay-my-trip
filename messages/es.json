@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "title": "HELP MY DREAM"
+  },
+  "hero": {
+    "eyebrow": "Copa del Mundo 2026",
+    "headline": "AYÚDANOS A VIVIR EL SUEÑO",
+    "subheadline": "Somos brasileños viviendo el sueño — el Mundial 2026 es aquí en Canadá, y necesitamos tu ayuda para estar en los partidos.",
+    "cta": "Comprar una Polaroid",
+    "scroll": "Ver el ranking"
+  },
+  "concept": {
+    "title": "CÓMO FUNCIONA",
+    "rule": "1 POLAROID = 1 GOL PARA TU EQUIPO",
+    "description": "Cada polaroid que compras añade un gol al marcador de tu país. Cuantas más polaroids, más alto sube tu país en el ranking.",
+    "step1_label": "Elige tu país",
+    "step1_desc": "Apoya a tu selección nacional",
+    "step2_label": "Compra una polaroid",
+    "step2_desc": "Cada una es una impresión física única",
+    "step3_label": "Marca un gol",
+    "step3_desc": "Tu país sube en el marcador"
+  },
+  "ranking": {
+    "title": "MARCADOR MUNDIAL",
+    "subtitle": "Top 10 países por polaroids compradas",
+    "rank": "Pos.",
+    "country": "País",
+    "goals": "Goles"
+  },
+  "pricing": {
+    "title": "ELIGE TU PAQUETE",
+    "subtitle": "Compra una polaroid y marca un gol para tu país",
+    "popular": "MÁS POPULAR",
+    "goal": "GOL",
+    "goals": "GOLES",
+    "buy": "AYUDAR AHORA",
+    "note": "Polaroid físico impreso y enviado a tu dirección",
+    "pkg1_name": "Inicial",
+    "pkg1_desc": "1 polaroid + 1 gol para tu país",
+    "pkg2_name": "Doble",
+    "pkg2_desc": "2 polaroids + 2 goles para tu país",
+    "pkg3_name": "Hat-Trick",
+    "pkg3_desc": "3 polaroids + 3 goles para tu país"
+  },
+  "footer": {
+    "made_by": "Hecho con ⚽ por brasileños en Canadá",
+    "location": "Soñando con el Mundial 2026"
+  }
+}
