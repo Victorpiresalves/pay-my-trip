@@ -12,13 +12,20 @@
     -webkit-font-smoothing: antialiased;
   }
   ::selection {
-    background: rgba(34, 197, 94, 0.3);
+    background: rgba(34, 197, 94, 0.5);
   }
 }
 
 @layer utilities {
   .text-stroke-green {
+    color: #22c55e;
     -webkit-text-stroke: 2px #22c55e;
+    paint-order: stroke fill;
+  }
+}
+
+@supports (-webkit-text-stroke: 1px) {
+  .text-stroke-green {
     color: transparent;
   }
 }

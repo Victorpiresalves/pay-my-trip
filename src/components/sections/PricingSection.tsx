@@ -82,7 +82,7 @@ export default function PricingSection() {
               </div>
 
               {/* Package name */}
-              <p className="font-display text-lg tracking-widest text-slate-400 uppercase">
+              <p className="font-display text-lg tracking-widest text-slate-200 uppercase">
                 {t(pkg.nameKey)}
               </p>
 
@@ -98,14 +98,14 @@ export default function PricingSection() {
 
               {/* Price */}
               <div className="flex items-start gap-1">
-                <span className="font-body text-slate-400 text-sm mt-2">CAD</span>
+                <span className="font-body text-slate-200 text-sm mt-2">CAD</span>
                 <span className="font-display text-5xl text-white leading-none">
                   ${pkg.price}
                 </span>
               </div>
 
               {/* Description */}
-              <p className="text-slate-400 text-sm font-body leading-relaxed">{t(pkg.descKey)}</p>
+              <p className="text-slate-300 text-sm font-body leading-relaxed">{t(pkg.descKey)}</p>
 
               {/* CTA */}
               <GlowButton
@@ -122,7 +122,7 @@ export default function PricingSection() {
         </div>
 
         {/* Footer note */}
-        <p className="text-center text-slate-600 text-sm font-body mt-10">{t('note')}</p>
+
       </div>
     </section>
   );
