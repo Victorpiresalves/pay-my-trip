@@ -35,8 +35,8 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 sm:py-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Text */}
         <div className="flex flex-col items-start gap-6">
-          <span className="text-pitch-light font-display tracking-[0.3em] text-sm uppercase">
-            {t('eyebrow')}
+          <span className="inline-flex items-center gap-2 bg-pitch-light/10 border border-pitch-light/40 text-pitch-light font-body font-semibold text-xs sm:text-sm tracking-[0.15em] uppercase px-3 py-1.5 rounded-full">
+            ⚽ {t('eyebrow')}
           </span>
 
           <h1
