@@ -13,7 +13,9 @@ export default function RankingSection() {
   const [goalsMap, setGoalsMap] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    createSupabaseClient()
+    const client = createSupabaseClient();
+    if (!client) return;
+    client
       .from('countries')
       .select('code, goals')
       .then(({ data }) => {
