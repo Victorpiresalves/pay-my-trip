@@ -37,7 +37,7 @@ const COUNTRIES = [
 
 export default function PricingSection() {
   const t = useTranslations('pricing');
-  const [selectedCountry, setSelectedCountry] = useState('BR');
+  const [selectedCountry, setSelectedCountry] = useState('CA');
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
