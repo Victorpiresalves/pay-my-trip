@@ -1,25 +1,27 @@
-import { getTranslations, getLocale } from 'next-intl/server';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import { rankingData } from '@/data/ranking';
 import CountryRow from '@/components/ui/CountryRow';
 import { createSupabaseClient } from '@/lib/supabase';
 import type { Locale } from '@/types';
 
-async function getGoals(): Promise<Record<string, number>> {
-  try {
-    const supabase = createSupabaseClient();
-    const { data } = await supabase.from('countries').select('code, goals');
-    if (!data) return {};
-    return Object.fromEntries(data.map((r: { code: string; goals: number }) => [r.code, r.goals]));
-  } catch {
-    return {};
-  }
-}
+export default function RankingSection() {
+  const t = useTranslations('ranking');
+  const locale = useLocale() as Locale;
+  const [goalsMap, setGoalsMap] = useState<Record<string, number>>({});
 
-export default async function RankingSection() {
-  const t = await getTranslations('ranking');
-  const locale = (await getLocale()) as Locale;
-
-  const goalsMap = await getGoals();
+  useEffect(() => {
+    createSupabaseClient()
+      .from('countries')
+      .select('code, goals')
+      .then(({ data }) => {
+        if (data) setGoalsMap(
+          Object.fromEntries(data.map((r: { code: string; goals: number }) => [r.code, r.goals]))
+        );
+      });
+  }, []);
 
   const entries = rankingData
     .map((entry) => ({ ...entry, goals: goalsMap[entry.countryCode] ?? 0 }))

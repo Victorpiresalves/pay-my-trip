@@ -13,12 +13,13 @@ interface PricingPackage {
   nameKey: 'pkg1_name' | 'pkg2_name' | 'pkg3_name';
   descKey: 'pkg1_desc' | 'pkg2_desc' | 'pkg3_desc';
   popular: boolean;
+  stripeUrl: string;
 }
 
 const packages: PricingPackage[] = [
-  { goals: 1, price: 10, image: '/1-goal.png', nameKey: 'pkg1_name', descKey: 'pkg1_desc', popular: false },
-  { goals: 2, price: 15, image: '/2-goal.png', nameKey: 'pkg2_name', descKey: 'pkg2_desc', popular: true },
-  { goals: 3, price: 20, image: '/3-goal.png', nameKey: 'pkg3_name', descKey: 'pkg3_desc', popular: false },
+  { goals: 1, price: 10, image: '/1-goal.png', nameKey: 'pkg1_name', descKey: 'pkg1_desc', popular: false, stripeUrl: 'https://donate.stripe.com/28E3cw756bjrdPPfxM6Zy00' },
+  { goals: 2, price: 15, image: '/2-goal.png', nameKey: 'pkg2_name', descKey: 'pkg2_desc', popular: true, stripeUrl: 'https://donate.stripe.com/eVq7sM0GIgDL4ffbhw6Zy01' },
+  { goals: 3, price: 20, image: '/3-goal.png', nameKey: 'pkg3_name', descKey: 'pkg3_desc', popular: false, stripeUrl: 'https://donate.stripe.com/cNi5kE3SUafncLL71g6Zy02' },
 ];
 
 const COUNTRIES = [
@@ -37,8 +38,6 @@ const COUNTRIES = [
 export default function PricingSection() {
   const t = useTranslations('pricing');
   const [selectedCountry, setSelectedCountry] = useState('BR');
-  const [loadingGoals, setLoadingGoals] = useState<number | null>(null);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -51,28 +50,6 @@ export default function PricingSection() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  async function handleBuy(goals: number) {
-    setLoadingGoals(goals);
-    setCheckoutError(null);
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ country: selectedCountry, goals }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        setCheckoutError('Something went wrong. Please try again.');
-      }
-    } catch {
-      setCheckoutError('Connection error. Please try again.');
-    } finally {
-      setLoadingGoals(null);
-    }
-  }
 
   const selected = COUNTRIES.find((c) => c.code === selectedCountry)!;
 
@@ -208,19 +185,18 @@ export default function PricingSection() {
 
               {/* CTA */}
               <GlowButton
-                onClick={() => handleBuy(pkg.goals)}
+                href={pkg.stripeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 variant={pkg.popular ? 'primary' : 'ghost'}
                 className="w-full text-center justify-center"
               >
-                {loadingGoals === pkg.goals ? '...' : t('buy')}
+                {t('buy')}
               </GlowButton>
             </motion.div>
           ))}
         </div>
 
-        {checkoutError && (
-          <p className="text-center text-red-400 font-body text-sm mt-6">{checkoutError}</p>
-        )}
       </div>
     </section>
   );
