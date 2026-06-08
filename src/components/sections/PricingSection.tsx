@@ -17,9 +17,9 @@ interface PricingPackage {
 }
 
 const packages: PricingPackage[] = [
-  { goals: 1, price: 10, image: '/1-goal.png', nameKey: 'pkg1_name', descKey: 'pkg1_desc', popular: false, stripeUrl: 'https://donate.stripe.com/28E3cw756bjrdPPfxM6Zy00' },
-  { goals: 2, price: 15, image: '/2-goal.png', nameKey: 'pkg2_name', descKey: 'pkg2_desc', popular: true, stripeUrl: 'https://donate.stripe.com/eVq7sM0GIgDL4ffbhw6Zy01' },
-  { goals: 3, price: 20, image: '/3-goal.png', nameKey: 'pkg3_name', descKey: 'pkg3_desc', popular: false, stripeUrl: 'https://donate.stripe.com/cNi5kE3SUafncLL71g6Zy02' },
+  { goals: 1, price: 10, image: '/1-goal.png', nameKey: 'pkg1_name', descKey: 'pkg1_desc', popular: false, stripeUrl: process.env.NEXT_PUBLIC_STRIPE_URL_1 ?? 'https://donate.stripe.com/28E3cw756bjrdPPfxM6Zy00' },
+  { goals: 2, price: 15, image: '/2-goal.png', nameKey: 'pkg2_name', descKey: 'pkg2_desc', popular: true, stripeUrl: process.env.NEXT_PUBLIC_STRIPE_URL_2 ?? 'https://donate.stripe.com/eVq7sM0GIgDL4ffbhw6Zy01' },
+  { goals: 3, price: 20, image: '/3-goal.png', nameKey: 'pkg3_name', descKey: 'pkg3_desc', popular: false, stripeUrl: process.env.NEXT_PUBLIC_STRIPE_URL_3 ?? 'https://donate.stripe.com/cNi5kE3SUafncLL71g6Zy02' },
 ];
 
 const COUNTRIES = [

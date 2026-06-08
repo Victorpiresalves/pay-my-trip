@@ -28,7 +28,7 @@ export default function GlowButton({
   const primary =
     'bg-pitch-light text-navy-900 hover:bg-pitch hover:shadow-glow';
   const ghost =
-    'border-2 border-pitch-light text-pitch-light bg-black/30 backdrop-blur-sm hover:bg-pitch-light hover:text-navy-900 hover:shadow-glow-sm';
+    'border-2 border-white text-white bg-black/30 backdrop-blur-sm hover:bg-white hover:text-navy-900 hover:shadow-glow-sm';
 
   const classes = `${base} ${variant === 'primary' ? primary : ghost} ${className}`;
 
