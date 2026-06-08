@@ -38,6 +38,7 @@ export default function PricingSection() {
   const t = useTranslations('pricing');
   const [selectedCountry, setSelectedCountry] = useState('BR');
   const [loadingGoals, setLoadingGoals] = useState<number | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -53,14 +54,21 @@ export default function PricingSection() {
 
   async function handleBuy(goals: number) {
     setLoadingGoals(goals);
+    setCheckoutError(null);
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ country: selectedCountry, goals }),
       });
-      const { url } = await res.json();
-      if (url) window.location.href = url;
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setCheckoutError('Something went wrong. Please try again.');
+      }
+    } catch {
+      setCheckoutError('Connection error. Please try again.');
     } finally {
       setLoadingGoals(null);
     }
@@ -80,12 +88,10 @@ export default function PricingSection() {
       <div className="max-w-5xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px flex-1 max-w-16 bg-pitch-light/40" />
-            <p className="font-display text-sm tracking-[0.3em] text-pitch-light uppercase">
+          <div className="flex items-center justify-center mb-4">
+            <span className="inline-flex items-center gap-2 bg-pitch-light/10 border border-pitch-light/40 text-pitch-light font-body font-semibold text-xs sm:text-sm tracking-[0.15em] uppercase px-3 py-1.5 rounded-full">
               {t('subtitle')}
-            </p>
-            <div className="h-px flex-1 max-w-16 bg-pitch-light/40" />
+            </span>
           </div>
           <h2 className="font-display text-5xl sm:text-6xl text-white">{t('title')}</h2>
         </div>
@@ -211,6 +217,10 @@ export default function PricingSection() {
             </motion.div>
           ))}
         </div>
+
+        {checkoutError && (
+          <p className="text-center text-red-400 font-body text-sm mt-6">{checkoutError}</p>
+        )}
       </div>
     </section>
   );

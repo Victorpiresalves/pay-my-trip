@@ -44,9 +44,9 @@ export default function ConceptSection() {
         {/* Section label */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <div className="h-px flex-1 max-w-16 bg-pitch-light/40" />
-          <p className="font-display text-sm tracking-[0.3em] text-pitch-light uppercase">
+          <span className="inline-flex items-center gap-2 bg-pitch-light/10 border border-pitch-light/40 text-pitch-light font-body font-semibold text-xs sm:text-sm tracking-[0.15em] uppercase px-3 py-1.5 rounded-full">
             {t('title')}
-          </p>
+          </span>
           <div className="h-px flex-1 max-w-16 bg-pitch-light/40" />
         </div>
 

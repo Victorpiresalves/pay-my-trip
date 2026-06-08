@@ -42,7 +42,7 @@ export default function CountryRow({ entry, locale, maxGoals, index }: CountryRo
       <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
         <Image
           src={`https://flagcdn.com/w40/${entry.countryCode.toLowerCase()}.png`}
-          alt={entry.countryName.en}
+          alt={entry.countryName[locale]}
           width={28}
           height={20}
           className="rounded-sm object-cover shrink-0"

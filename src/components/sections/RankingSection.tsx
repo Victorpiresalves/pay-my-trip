@@ -55,7 +55,7 @@ export default async function RankingSection() {
             <span className="font-body text-xs text-slate-400 uppercase tracking-wider flex-1">
               {t('country')}
             </span>
-            <span className="font-body text-xs text-slate-400 uppercase tracking-wider w-16 sm:w-auto text-right shrink-0">
+            <span className="font-body text-xs text-slate-400 uppercase tracking-wider w-16 sm:flex-1 text-right shrink-0">
               {t('goals')}
             </span>
           </div>
