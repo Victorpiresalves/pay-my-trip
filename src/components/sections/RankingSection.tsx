@@ -13,8 +13,9 @@ export default function RankingSection() {
   const [goalsMap, setGoalsMap] = useState<Record<string, number>>({});
 
   useEffect(() => {
+    console.log('[Supabase] URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'MISSING');
     const client = createSupabaseClient();
-    if (!client) return;
+    if (!client) { console.warn('[Supabase] client is null — env vars missing from build'); return; }
     client
       .from('countries')
       .select('code, goals')
