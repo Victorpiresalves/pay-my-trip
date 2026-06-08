@@ -18,7 +18,8 @@ export default function RankingSection() {
     client
       .from('countries')
       .select('code, goals')
-      .then(({ data }) => {
+      .then(({ data, error }) => {
+        if (error) console.error('[Supabase]', error);
         if (data) setGoalsMap(
           Object.fromEntries(data.map((r: { code: string; goals: number }) => [r.code, r.goals]))
         );
